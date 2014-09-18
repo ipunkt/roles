@@ -11,6 +11,7 @@ namespace Ipunkt\Roles\PermissionChecker;
 
 use App;
 use Illuminate\Auth\UserInterface;
+use Ipunkt\Permissions\CanInterface;
 use Ipunkt\Permissions\PermissionChecker\PermissionCheckerInterface;
 use Ipunkt\Roles\Permissions\PermissionField;
 use Ipunkt\Roles\Roles\EloquentRoleRepository;
@@ -41,7 +42,7 @@ class RolePermissionChecker extends PermissionChecker {
      * @param string $action
      * @return boolean
      */
-    public function checkPermission(UserInterface $user, $action) {
+    public function checkPermission(CanInterface $user, $action) {
         $has_permission = false;
 
         $container_name = $this->getEntity()->getTable();

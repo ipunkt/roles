@@ -19,54 +19,81 @@ Add
 
     'Ipunkt\Roles\RolesServiceProvider'
     
-to your service provider list
+to your service provider list.
+
+Migrate by doing
+
+    php artisan migrate --package=ipunkt/roles
+
+## How it works
+
+- A resource type has actions which can be performed on it.
+- A Role has permissions to perform actions.
+- A permission can affect the whole resource type or just a single resource
+- A permission on a single resource takes precedence over a permission on the whole resource type
+- A User has Roles.
+
+### Special Names
+
+The name `*` is special both for actions and resources.  
+When used for actions, it will match all actions  
+When used for resources, it will match all resources  
+
+Note however that other more specific permissions take precedence over this.
+Example:  
+Role Subadmin has permission allowing to do '*' on '*'
+Role Subadmin has permission forbidding to do '*' on 'supersecrettable'
+
+$userWithSubadmin->can('anything', $superSecretModel) will return false, because *.supersecrettable is more specific than *.*
 
 ## Use
 
-### Creating Privileges
+### Checking Permissions
+`Ipunkt\Roles\PermissionChecker\RolePermissionChecker` will be set as the default permission checker for `ipunkt\permissions`
+unless you disable it in the config.
+
+There are 3 ways to use this package
+
+- Commands
+- Web Interface
+- Through the repositories
+
+### Commands
+
+command                 | parameters                    | description
+------------------------|-------------------------------|------------
+resource:make           | resource name                 | Creates a new resource with the given name
+resource:list           |                               | Lists all resources
+resource:destroy        | resource id                   | Destroy the resource with the given id
+resource:addaction      | resource id, action name      | Add an action with the given name to the resource with the given id
+resource:listactions    | resource id                   | List all actions the resource with the given id has
+resource:removeaction   | resource id, action name      | Remove the action with the given name on the resource with the given id
+roles:superuser         | user id                       | Assign the role 'Superuser' to the given user which has permission to do '*' on '*'. If necessary this roles will be created
+
+### Web Interface
+
+The web interface protects itself through ipunkt/permissions, so make sure you have permission to do * on resources and roles.  
+TODO: config variable to disable the web interface entirely
+
+#### Resources
 Access /permissions/privilege or the route permissions.privilege.index
 
-While the naming of privileges are theoreticaly free it is recommended to use the same name as the table they grant
-access on.
-
-Create a privilege and add actions to it.
-
-The special name '*' can be used both as privilege and as action to grant privileges on all tables/actions of the given table
-
-### Creating Roles
+#### Creating Roles
 Access /permissions/role or the route permissions.role.index
 
-View, then edit the created role to add permissions to it.
+### Through the repositories
+`Ipunkt\Roles\Roles\RoleRepositoryInterface` is injected with the repository to work with roles.
+`Ipunkt\Roles\Resources\ResourceRepositoryInterface` is injected with the repository to work with resources.
 
-### Assigning Roles to Users
-Is outside the scope of this package, see ipunkt/auth and ipunkt/auth-roles
+## Advanced Use
+It is theoreticaly possible to switch out the default eloquent roles to something else by implementing the RoleInterface,
+PermissionInterface and PrivilegeInterface for a different ORM/Database and replacing the repositories. However this remains
+untested.
 
-### Connect Roles to Users
+### Assigning Roles
 There is a package ipunkt/auth-roles which connects these roles with ipunkt/auth users and brings an interface to
 assign roles to them.
 
 If you wish to implement your own connection to a user model make sure to overwrite
 Ipunkt\Permissions\Repositories\RoleRepositoryInterface in the IoC.
 The simplest way to do this is extend EloquentRoleRepository and override allByUserId($id)
-
-## Check Permissions
-This package sets a new default PermissionChecker unless it gets disabled in the config.
-
-This new 'RolePermissionChecker' checks if the given user has permissions on the models table -> container, id -> id,
-action -> as given throughout its roles.
-
-Since permissions can both allow and deny it is important to understand the order of priority in which permissions take
-precedence. Ordered, starting with most important:
-
-1. Permission denied on specific id
-2. Permission allowed on specific id
-3. Permission denied on container
-4. permission allowed on container
-
-if none of these apply the default value will be returned as give to $user->can('action', $model, defaultValue(false if not given));
-NOTE: Not yet implemented
-
-## Using non-eloquent roles
-It is theoreticaly possible to switch out the default eloquent roles to something else by implementing the RoleInterface,
-PermissionInterface and PrivilegeInterface for a different ORM/Database and replacing the repositories. However this remains
-untested.

@@ -1,7 +1,7 @@
 {
     "name": "ipunkt/roles",
     "description": "Role based permission checking for the ipunkt/permissions package",
-    "keywords": ["laravel", "php", "roles", "permissions"],
+    
     "homepage": "https://github.com/ipunkt/roles",
     "license": "MIT",
     "authors": [
