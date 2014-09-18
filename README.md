@@ -1,9 +1,27 @@
-# Ipunkt\Permissions
+ipunkt\Permissions
+==================
 
-Ipunkt\Permissions brings a role based system to give out permissions to users.
+# About
+
+Role based permission checking for ipunkt/permissions
 
 ## Install
-Require with composer, migrate database
+
+Add to your composer.json following lines
+
+	"require": {
+		"ipunkt/roles": "dev-master"
+	}
+
+## Configuration
+
+Add 
+
+    'Ipunkt\Roles\RolesServiceProvider'
+    
+to your service provider list
+
+## Use
 
 ### Creating Privileges
 Access /permissions/privilege or the route permissions.privilege.index
