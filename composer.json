@@ -2,7 +2,7 @@
     "name": "ipunkt/roles",
     "description": "Role based permission checking for the ipunkt/permissions package",
     "keywords": ["laravel", "php", "ipunkt/permissions"],
-    "homepage": "https://github.com/ipunkt/social-auth",
+    "homepage": "https://github.com/ipunkt/roles",
     "license": "MIT",
     "authors": [
         {
