@@ -36,7 +36,7 @@ trait EloquentUserWithRolesTrait {
      */
     public function assignRole(RoleInterface $role) {
         $success = false;
-        $eloquent_role = $this->roles()->whereId($role->getId())->first();
+        $eloquent_role = $this->roles()->find($role->getId());
 
         // Make sure we're not creating a duplicate relationship
         if($eloquent_role == null) {
