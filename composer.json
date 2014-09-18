@@ -1,0 +1,29 @@
+{
+    "name": "ipunkt/roles",
+    "description": "Role based permission checking for the ipunkt/permissions package",
+    "keywords": ["laravel", "php", "ipunkt/permissions"],
+    "homepage": "https://github.com/ipunkt/social-auth",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sven Speckmaier",
+            "email": "sps@ipunkt.biz"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.*",
+		  "ipunkt/permissions": "dev-master",
+    },
+    "autoload": {
+        "psr-0": {
+            "Ipunkt\\Roles\\": "src/"
+        },
+        "classmap": [
+            "src/migrations",
+            "src/controllers",
+            "src/commands"
+        ]
+    },
+    "minimum-stability": "stable"
+}
