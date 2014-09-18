@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-sm-12">
             {{ Form::label( 'container', trans('roles::resource.container') ) }}
-            {{ Form::text( 'container', $resource->containerName()) }}
+            {{ Form::text( 'container', $resource->getName()) }}
         </div>
     </div>
     <div class="row">
@@ -38,9 +38,9 @@
                     <th>{{ trans('roles::resource.action') }}</th>
                     <th class="text-right">{{ trans('roles::resource.delete action') }} </th>
                 </tr>
-                @foreach( $resource->actionList() as $action )
+                @foreach( $resource->getActions() as $action )
                 <tr>
-                    <td> {{{ $action->name() }}} </td>
+                    <td> {{{ $action->getName() }}} </td>
                     <td class="text-right">
                         {{ Form::open(['route' => ['roles.resource.destroy_action', $resource->getId(), $action->getId() ], 'method' => 'post']) }}
                         {{ Form::submit(trans('roles::resource.delete action'), ['class' => 'btn btn-danger']) }}

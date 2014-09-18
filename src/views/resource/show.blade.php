@@ -10,15 +10,15 @@
     <div class="row">
         <div class="col-sm-12">
             {{ Form::label( 'container', trans('roles::resource.container') ) }}
-            {{ Form::text( 'container', $resource->containerName(), ['disabled' => 'disabled']) }}
+            {{ Form::text( 'container', $resource->getName(), ['disabled' => 'disabled']) }}
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
             <h2> {{ trans('roles::resource.actions') }}</h2>
             <ul>
-                @foreach( $resource->actionList() as $action )
-                    <li> {{{ $action->name() }}}</li>
+                @foreach( $resource->Actions() as $action )
+                    <li> {{{ $action->getName() }}}</li>
                 @endforeach
             </ul>
         </div>

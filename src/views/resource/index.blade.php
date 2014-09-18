@@ -12,7 +12,7 @@
                 <ul>
         @foreach($resources as $resource)
                     <li>
-                        <a href="{{ route('roles.resource.show', $resource->getId()) }} ">{{{ $resource->containerName() }}} </a>
+                        <a href="{{ route('roles.resource.show', $resource->getId()) }} ">{{{ $resource->getName() }}} </a>
                     </li>
         @endforeach
                 </ul>
