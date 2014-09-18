@@ -72,10 +72,10 @@ class EloquentRoleRepository implements RoleRepositoryInterface {
      * @return RoleInterface[]
      */
     public function allByUserId($id)
-    {
-        //return EloquentRole::all()->where('', '=', $id);
-        // FIXME: find a better way to hand over user <-> role integration
-        return [];
+	 {
+		 return EloquentRole::whereHas('users', function($q) use ($id) {
+			 $q->where('user_id', $id);
+		 })->get();
     }
 
 

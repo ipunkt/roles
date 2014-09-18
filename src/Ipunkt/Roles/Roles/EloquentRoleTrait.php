@@ -24,6 +24,11 @@ trait EloquentRoleTrait {
          */
         return $this->hasMany('Ipunkt\Roles\Permissions\EloquentPermission', 'role_id')->with('action');
     }
+	  
+    public function users() {
+        $model = \Config::get('auth.model');
+        return $this->belongsToMany($model, 'user_roles', 'user_id', 'id');
+    }
 
     /**
      * @return PermissionInterface[]
