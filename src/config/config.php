@@ -10,7 +10,7 @@ return [
     'set user model' => true,
     'set permission checker' => true,
     'extends' => [
-        'view' => 'auth::nomaster',
+        'view' => 'roles::nomaster',
         'section' => 'content',
         'script' => 'script'
     ],
