@@ -5,6 +5,7 @@ use Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
 use Input;
+use Ipunkt\Roles\Users\UserRepositoryInterface;
 use Ipunkt\Roles\UserWithRolesInterface;
 
 use Ipunkt\Auth\Repositories\EloquentRepository;
@@ -30,7 +31,7 @@ class RoleController extends \BaseController {
      */
     private $privilege_repository;
     /**
-     * @var \Ipunkt\Auth\Repositories\EloquentRepository
+     * @var UserRepositoryInterface
      */
     private $user_repository;
 
@@ -49,7 +50,7 @@ class RoleController extends \BaseController {
      * @param ResourceRepositoryInterface $privilege_repository
      * @param EloquentRepository $user_repository
      */
-    public function __construct(RoleRepositoryInterface $repository, ResourceRepositoryInterface $privilege_repository, EloquentRepository $user_repository) {
+    public function __construct(RoleRepositoryInterface $repository, ResourceRepositoryInterface $privilege_repository, UserRepositoryInterface $user_repository) {
         $this->role_repository = $repository;
         $this->privilege_repository = $privilege_repository;
         $this->user_repository = $user_repository;
