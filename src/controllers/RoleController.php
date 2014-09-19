@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\MessageBag;
 use Input;
 use Ipunkt\Roles\Users\UserRepositoryInterface;
-use Ipunkt\Roles\UserWithRolesInterface;
+use Ipunkt\Roles\Users\UserWithRolesInterface;
 
-use Ipunkt\Auth\Repositories\EloquentRepository;
 use Ipunkt\Roles\Resources\ResourceRepositoryInterface;
 use Ipunkt\Roles\Roles\RoleInterface;
 use Ipunkt\Roles\Roles\RoleRepositoryInterface;
@@ -19,6 +18,8 @@ use View;
 /**
  * Class RoleController
  * @package Ipunkt\Roles
+ * 
+ * Provides the Webinterface to create roles and give them permissions
  */
 class RoleController extends \BaseController {
 
@@ -26,19 +27,21 @@ class RoleController extends \BaseController {
      * @var RoleRepositoryInterface
      */
     protected $role_repository;
+    
     /**
      * @var ResourceRepositoryInterface
      */
     private $privilege_repository;
+    
     /**
      * @var UserRepositoryInterface
      */
     private $user_repository;
 
     /**
-     * Get the Simpleauth\UserInterface matching the logged in user
+     * Get the UserWithRolesInterface matching the logged in user
      *
-     * @return \Ipunkt\Auth\models\UserInterface
+     * @return UserWithRolesInterface
      */
     protected function getUser() {
         $user_id = Auth::user()->getAuthIdentifier();
@@ -48,7 +51,7 @@ class RoleController extends \BaseController {
     /**
      * @param RoleRepositoryInterface $repository
      * @param ResourceRepositoryInterface $privilege_repository
-     * @param EloquentRepository $user_repository
+     * @param UserRepositoryInterface $user_repository
      */
     public function __construct(RoleRepositoryInterface $repository, ResourceRepositoryInterface $privilege_repository, UserRepositoryInterface $user_repository) {
         $this->role_repository = $repository;
@@ -58,7 +61,7 @@ class RoleController extends \BaseController {
     }
 
 	/**
-	 * Display a listing of the resource.
+	 * Display a listing of all roles.
 	 *
 	 * @return Response
 	 */
@@ -81,7 +84,7 @@ class RoleController extends \BaseController {
 
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new role.
 	 *
 	 * @return Response
 	 */
@@ -89,7 +92,7 @@ class RoleController extends \BaseController {
 	{
         $dummy_role = $this->role_repository->create();
         $user = $this->getUser();
-        if($user->can($dummy_role, 'create')) {
+        if($user->can('create', $dummy_role)) {
             $variables = [];
             $variables['extends'] = Config::get('roles::extends');
             $response = View::make('roles::role/create', $variables);
@@ -101,7 +104,7 @@ class RoleController extends \BaseController {
 
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created role in storage.
 	 *
 	 * @return Response
 	 */
@@ -111,7 +114,7 @@ class RoleController extends \BaseController {
         $role = $this->role_repository->create();
 
         $user = $this->getUser();
-        if($user->can($role, 'create')) {
+        if($user->can('create', $role)) {
 
             $role->setName($name);
 
@@ -126,7 +129,7 @@ class RoleController extends \BaseController {
 
 
 	/**
-	 * Display the specified resource.
+	 * Display the specified role.
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -134,7 +137,7 @@ class RoleController extends \BaseController {
 	public function show(RoleInterface $role)
 	{
         $user = $this->getUser();
-        if($user->can($role, 'show')) {
+        if($user->can('show',$role) ) {
             $variables = [];
             $variables['extends'] = Config::get('roles::extends');
             $variables['role'] = $role;
@@ -147,7 +150,7 @@ class RoleController extends \BaseController {
 
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * Show the form for editing the specified role.
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -155,7 +158,7 @@ class RoleController extends \BaseController {
 	public function edit(RoleInterface $role)
 	{
         $user = $this->getUser();
-        if($user->can($role, 'edit')) {
+        if($user->can('edit', $role)) {
             $variables = [];
             $variables['extends'] = Config::get('roles::extends');
             $variables['role'] = $role;
@@ -203,14 +206,14 @@ class RoleController extends \BaseController {
 
 
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified role in storage.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
 	public function update(RoleInterface $role)
 	{
-        if(Auth::user()->can('edit',$role)) {
+        if(Auth::user()->can('edit', $role)) {
             $response = null;
 
             $name = Input::get('name');
@@ -230,7 +233,7 @@ class RoleController extends \BaseController {
 	}
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified role from storage.
      *
      * @param RoleInterface $role
      * @internal param int $id
@@ -241,7 +244,7 @@ class RoleController extends \BaseController {
         $response = null;
 
         $user = $this->getUser();
-        if($user->can($role, 'delete')) {
+        if($user->can('delete', $role)) {
             if($this->role_repository->delete($role)) {
                 $response = Redirect::route('roles.role.index')->with('success', trans('roles::role.delete_success'));
             } else {
