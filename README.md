@@ -1,4 +1,4 @@
-ipunkt\Permissions
+ipunkt/roles
 ==================
 
 # About
