@@ -9,6 +9,12 @@
 namespace Ipunkt\Roles\Permissions;
 
 
+/**
+ * Class PermissionField
+ * @package Ipunkt\Roles\Permissions
+ * 
+ * Plain old Data implementation of the PermissionFieldInterface
+ */
 class PermissionField implements PermissionFieldInterface {
     protected $container = null, $id = null, $action = null;
 

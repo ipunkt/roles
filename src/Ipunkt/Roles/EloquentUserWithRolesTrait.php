@@ -1,6 +1,7 @@
 <?php namespace Ipunkt\Roles;
 
 use Ipunkt\Roles\Exceptions\DuplicateRoleException;
+use Ipunkt\Roles\Exceptions\UnkownRoleException;
 use Ipunkt\Roles\Roles\RoleInterface;
 
 /**
@@ -27,13 +28,14 @@ trait EloquentUserWithRolesTrait {
         return $this->roles;
     }
 
-    /**
-     * Attempt to assign a role to this user.
-     * returns true on success and false otherwise.
-     *
-     * @param RoleInterface $role
-     * @return boolean
-     */
+	/**
+	 * Attempt to assign a role to this user.
+	 * returns true on success and false otherwise.
+	 *
+	 * @param RoleInterface $role
+	 * @throws DuplicateRoleException
+	 * @return boolean
+	 */
     public function assignRole(RoleInterface $role) {
         $success = false;
         $eloquent_role = $this->roles()->find($role->getId());
@@ -49,23 +51,23 @@ trait EloquentUserWithRolesTrait {
         return $success;
     }
 
-    /**
-     * Attempt to remove the given role from this user.
-     * returns true on success and false otherwise.
-     *
-     * @param RoleInterface $role
-     * @return boolean
-     */
+	/**
+	 * Attempt to remove the given role from this user.
+	 * returns true on success and false otherwise.
+	 *
+	 * @param RoleInterface $role
+	 * @throws UnkownRoleException
+	 * @return boolean
+	 */
     public function removeRole(RoleInterface $role) {
-        $success = false;
         $eloquent_role = $this->roles()->whereId($role->getId())->first();
 
-        if(!is_null($eloquent_role)) {
-
-        } else {
-            throw UnkownRoleException($this->getId().'('.$this->getName().') does not have the role '.$role->getId().
-            '('.$role->getName().')');
+        if(is_null($eloquent_role)) {
+	        throw new UnkownRoleException($this->getId().'('.$this->getName().') does not have the role '.$role->getId().
+		        '('.$role->getName().')');
         }
+	        
+	    $success = $this->roles()->detach($role->getId());
 
         return $success;
     }

@@ -3,6 +3,13 @@
 use Config;
 use Illuminate\Support\Collection;
 
+/**
+ * Class EloquentUserRepository
+ * @package Ipunkt\Roles\Users
+ * 
+ * This implementation of UserRepositoryInterface assumes a User was implemented using the Eloquent ORM and its classpath
+ * was set in the config file config/auth.php as model to authenticate with.
+ */
 class EloquentUserRepository implements UserRepositoryInterface {
     /**
      * @param $id

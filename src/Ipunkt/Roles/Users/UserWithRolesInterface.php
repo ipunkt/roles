@@ -11,6 +11,10 @@ namespace Ipunkt\Roles\Users;
 
 use Ipunkt\Roles\Roles\RoleInterface;
 
+/**
+ * Interface UserWithRolesInterface
+ * @package Ipunkt\Roles\Users
+ */
 interface UserWithRolesInterface {
     /**
      * get an array of roles associated with this user

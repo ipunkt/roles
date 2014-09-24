@@ -8,6 +8,13 @@
 
 namespace Ipunkt\Roles\Permissions;
 
+/**
+ * Class EloquentPermission
+ * @package Ipunkt\Roles\Permissions
+ * 
+ * Implementation of the PermissionInterface using the Eloquent ORM
+ * Represents a permission in the Database
+ */
 class EloquentPermission extends \Eloquent implements PermissionInterface {
     use EloquentPermissionTrait;
     use GenericPermissionTrait;

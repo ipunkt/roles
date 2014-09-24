@@ -1,6 +1,10 @@
 <?php namespace Ipunkt\Roles\Resources;
 
 
+/**
+ * Class EloquentResourceRepository
+ * @package Ipunkt\Roles\Resources
+ */
 class EloquentResourceRepository implements ResourceRepositoryInterface {
     /**
      * Get all ResourceInterfaces this Repository contains.

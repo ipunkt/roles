@@ -8,6 +8,17 @@
 
 namespace Ipunkt\Roles\Permissions;
 
+/**
+ * Interface PermissionInterface
+ * @package Ipunkt\Roles\Permissions
+ * 
+ * A permission which can be assigned to a role.
+ * It can either allow
+ * - grantsPermission()
+ * or deny
+ * - deniesPermission()
+ * Permission to do an action.
+ */
 interface PermissionInterface extends PermissionFieldInterface {
     /**
      * Returns the unique identifier by which this permission is identified
@@ -38,12 +49,12 @@ interface PermissionInterface extends PermissionFieldInterface {
      *          e.g. 'inventory.7.new' applies to container='inventory', id=7, action='new' and is specific to it
      *               'inventory.new' applies to container='inventory', id=null, action='new' and is specific to it
      *
-     * @param string $container
-     * @param int|null $id
-     * @param string $action
+     * @param string $resource the name of the resource type to check for
+     * @param int|null $id the id of resource to check for
+     * @param string $action the action for which you wish to know if the permission applies
      * @return int
      */
-    public function permissionApplies($container, $id, $action);
+    public function permissionApplies($resource, $id, $action);
 
     /**
      * set this permission to grant access

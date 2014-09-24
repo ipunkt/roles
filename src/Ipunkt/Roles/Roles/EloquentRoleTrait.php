@@ -14,6 +14,10 @@ use Ipunkt\Roles\Exceptions\PermissionNotFoundException;
 use Ipunkt\Roles\Permissions\EloquentPermission;
 use Ipunkt\Roles\Permissions\PermissionInterface;
 
+/**
+ * Class EloquentRoleTrait
+ * @package Ipunkt\Roles\Roles
+ */
 trait EloquentRoleTrait {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

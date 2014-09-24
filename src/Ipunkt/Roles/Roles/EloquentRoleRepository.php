@@ -8,7 +8,10 @@
 
 namespace Ipunkt\Roles\Roles;
 
-
+/**
+ * Class EloquentRoleRepository
+ * @package Ipunkt\Roles\Roles
+ */
 class EloquentRoleRepository implements RoleRepositoryInterface {
     protected $errors;
 
