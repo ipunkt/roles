@@ -26,13 +26,19 @@ class BaseCommand extends Command {
      * @return ResourceInterface
      * @throws Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function getResource($id) {
+    public function getResource() {
         $resource = null;
         try {
-            $resource = $this->repository->findOrFail($id);
-            $this->info("Resource $id -> {$resource->getName()} found.");
+	        $id_or_name = $this->argument('resource');
+	        if(is_numeric($id_or_name)) {
+		        $resource = $this->repository->findOrFail($id_or_name);
+		        $this->info("Resource $id_or_name -> {$resource->getName()} found.");
+	        } else {
+		        $resource = $this->repository->byName($id_or_name);
+		        $this->info("Resource {$resource->getId()} -> {$id_or_name} found.");
+	        }
         } catch(\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            $this->info("Failed to find resource with id $id");
+            $this->info("Failed to find resource with id $id_or_name");
             throw $e;
         }
         return $resource;

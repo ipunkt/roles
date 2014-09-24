@@ -59,7 +59,7 @@ class ResourceDestroyCommand extends BaseCommand {
 	protected function getArguments()
 	{
 		return array(
-			array('resourceid', InputArgument::REQUIRED, 'The name of the resource to be destroyed.'),
+			array('resource', InputArgument::REQUIRED, 'The name of the resource to be destroyed.'),
 		);
 	}
 

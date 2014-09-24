@@ -38,9 +38,8 @@ class ResourceAddActionCommand extends BaseCommand {
 	 * @return mixed
 	 */
 	public function fire() {
-            $id = $this->argument('resource id');
             $action_name = $this->argument('actionname');
-            $resource = $this->getResource($id);
+            $resource = $this->getResource();
 
             if($resource->addAction($action_name)) {
                 $this->info("Adding $action_name to {$resource->getName()} was successful.");
@@ -57,7 +56,7 @@ class ResourceAddActionCommand extends BaseCommand {
 	protected function getArguments()
 	{
 		return array(
-			array('resource id', InputArgument::REQUIRED, 'The id of the resource to which this action will be added.'),
+			array('resource', InputArgument::REQUIRED, 'The id of the resource to which this action will be added.'),
             array('actionname', InputArgument::REQUIRED, 'The name this action will have.'),
 		);
 	}

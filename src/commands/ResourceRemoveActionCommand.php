@@ -59,10 +59,9 @@ class ResourceRemoveActionCommand extends BaseCommand {
 	 * @return mixed
 	 */
 	public function fire() {
-        $resource_id = $this->argument('resource id');
         $action_name = $this->argument('action name');
 
-        $resource = $this->getResource($resource_id);
+        $resource = $this->getResource();
         /**
          * @var ResourceInterface $resource
          */
@@ -87,7 +86,7 @@ class ResourceRemoveActionCommand extends BaseCommand {
 	protected function getArguments()
 	{
 		return array(
-			array('resource id', InputArgument::REQUIRED, 'The id of the resource from which this action is removed.'),
+			array('resource', InputArgument::REQUIRED, 'The id of the resource from which this action is removed.'),
             array('action name', InputArgument::REQUIRED, 'The name of the action to remove from the ressource.'),
 		);
 	}

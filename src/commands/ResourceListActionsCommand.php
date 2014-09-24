@@ -37,9 +37,7 @@ class ResourceListActionsCommand extends BaseCommand {
 	 */
 	public function fire()
 	{
-        $id = $this->argument('resource id');
-
-        $resource = $this->getResource($id);
+        $resource = $this->getResource();
         $count = 1;
         foreach($resource->getActions() as $action) {
             $this->info("{$count} {$action->getName()}");
@@ -55,7 +53,7 @@ class ResourceListActionsCommand extends BaseCommand {
 	protected function getArguments()
 	{
 		return array(
-			array('resource id', InputArgument::REQUIRED, 'The id of the resource for which all actions should be shown.'),
+			array('resource', InputArgument::REQUIRED, 'The id of the resource for which all actions should be shown.'),
 		);
 	}
 
