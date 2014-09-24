@@ -69,12 +69,12 @@ class ResourceRemoveActionCommand extends BaseCommand {
 
         if($action !== null) {
             if($resource->removeAction($action)) {
-                $this->info("Removed action $action_name from resource $resource_id:{$resource->getName()}");
+                $this->info("Removed action $action_name from resource {$resource->getId()}:{$resource->getName()}");
             } else {
-                $this->error("Failed to remove action $action_name from resource $resource_id:{$resource->getName()}");
+                $this->error("Failed to remove action $action_name from resource {$resource->getId()}:{$resource->getName()}");
             }
         } else {
-            $this->error("Action $action_name not found on resource $resource_id:{$resource->getName()}");
+            $this->error("Action $action_name not found on resource {$resource->getId()}:{$resource->getName()}");
         }
 	}
 
