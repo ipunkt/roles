@@ -7,8 +7,8 @@
  */
 
 return [
-    'set user model' => true,
-    'set permission checker' => true,
+    'set_user_model' => true,
+    'set_permission_checker' => true,
     'extends' => [
         'view' => 'roles::nomaster',
         'section' => 'content',

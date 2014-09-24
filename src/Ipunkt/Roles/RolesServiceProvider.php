@@ -29,8 +29,8 @@ class RolesServiceProvider extends ServiceProvider {
 	{
 		$this->package('ipunkt/roles');
 
-        if(Config::get('roles::set permission checker')) {
-            Config::set('auth::set permission checker', false);
+        if(Config::get('roles::set_permission_checker')) {
+            Config::set('auth::set_permission_checker', false);
             App::bind('Ipunkt\Auth\PermissionChecker\PermissionCheckerInterface',
                     'Ipunkt\Roles\PermissionChecker\RolePermissionChecker');
             App::bind('Ipunkt\Permissions\PermissionChecker\PermissionCheckerInterface',

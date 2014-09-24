@@ -35,16 +35,16 @@ Migrate by doing
 
 ### Special Names
 
-The name `*` is special both for actions and resources.  
+The name `\*` is special both for actions and resources.  
 When used for actions, it will match all actions  
 When used for resources, it will match all resources  
 
 Note however that other more specific permissions take precedence over this.
 Example:  
-Role Subadmin has permission allowing to do '*' on '*'
-Role Subadmin has permission forbidding to do '*' on 'supersecrettable'
+Role Subadmin has permission allowing to do '\*' on '\*'
+Role Subadmin has permission forbidding to do '\*' on 'supersecrettable'
 
-$userWithSubadmin->can('anything', $superSecretModel) will return false, because *.supersecrettable is more specific than *.*
+$userWithSubadmin->can('anything', $superSecretModel) will return false, because \*.supersecrettable is more specific than \*.\*
 
 ## Use
 
@@ -68,11 +68,11 @@ resource:destroy        | resource id                   | Destroy the resource w
 resource:addaction      | resource id, action name      | Add an action with the given name to the resource with the given id
 resource:listactions    | resource id                   | List all actions the resource with the given id has
 resource:removeaction   | resource id, action name      | Remove the action with the given name on the resource with the given id
-roles:superuser         | user id                       | Assign the role 'Superuser' to the given user which has permission to do '*' on '*'. If necessary this roles will be created
+roles:superuser         | user id                       | Assign the role 'Superuser' to the given user which has permission to do '\*' on '\*'. If necessary this roles will be created
 
 ### Web Interface
 
-The web interface protects itself through ipunkt/permissions, so make sure you have permission to do * on resources and roles.  
+The web interface protects itself through ipunkt/permissions, so make sure you have permission to do \* on resources and roles.  
 TODO: config variable to disable the web interface entirely
 
 #### Resources
